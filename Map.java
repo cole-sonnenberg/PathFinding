@@ -32,7 +32,9 @@ public class Map {
         return s;
     }
 
-    public boolean isWall(int x, int y) {
+    public boolean isWall(Point p) {
+        int x = p.getX();
+        int y = p.getY();
         if (x < 0 || x >= xSize) {
             return true;
         }
@@ -45,11 +47,23 @@ public class Map {
         return false;
     }
 
-    public Path getShortestPath(Point start, Point goal) {
-        
-    }
-
-    public Path getShortestPath(Path path, Point goal) {
-
+    public Path getShortestPath(Point start, Point goal, Path oldPath) {
+        Path path = new Path(oldPath);
+        Path[] splitPaths = new Path[4];
+        boolean stuck = true;
+        int shortestPathLength;
+        int shortestPath;
+        path.addNewPoint(start);
+        for (int d = 0; d < 4; d++) {
+            if (!isWall(start.move(d)) && !path.getPath().contains(start.move(d))) {
+                stuck = false;
+                splitPaths[d] = getShortestPath(start.move(d), goal, path);
+            }
+        }
+        if (stuck) {
+            path.invalidate();
+            return path;
+        }
+        return null; //remove
     }
 }

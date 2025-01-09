@@ -16,5 +16,19 @@ public class Point {
     public int getY() {
         return y;
     }
-    public bool()
+    public Point move(int d) {
+        if (d == EAST) {
+            return new Point(x+1, y);
+        }
+        if (d == NORTH) {
+            return new Point(x, y-1);
+        }
+        if (d == WEST) {
+            return new Point(x-1, y);
+        }
+        if (d == SOUTH) {
+            return new Point(x, y+1);
+        }
+        return null;
+    }
 }

@@ -11,3 +11,5 @@ Important Commands
     Checks if current verion is up to date
     git pull origin
     Updates local files with what is on github
+
+Map has shortest path method
