@@ -1,0 +1,13 @@
+Important Commands
+    git add <filename>
+    Adds file to list of files being tracked
+    git commit -m "Message"
+    Commits the change to git with a message
+    git push --set-upstream origin master
+    Updates github with new changes, should be used after add and commit
+    git fetch origin
+    Gets current version of code from git
+    git status
+    Checks if current verion is up to date
+    git pull origin
+    Updates local files with what is on github
