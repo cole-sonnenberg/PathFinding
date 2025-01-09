@@ -1,6 +1,7 @@
 import java.util.*;
 public class Path {
     private ArrayList<Point> path;
+    boolean valid;
     //Constructor
     public Path(Point p) {
         path = new ArrayList<>();
@@ -13,8 +14,13 @@ public class Path {
     }
 
     //Get Methods
-    public Path getPath() {
+    public ArrayList<Point> getPath() {
         return path;
     }
     
+    //Movement methods
+    public Path addUp(Point p) {
+        if (!isWall(p))
+    }
+
 }
