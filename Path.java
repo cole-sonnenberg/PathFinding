@@ -7,7 +7,10 @@ public class Path {
 
     private ArrayList<Point> path;
     boolean valid = true;
-    //Constructor
+    //Constructors
+    public Path() {
+        path = new ArrayList<>();
+    }
     public Path(Point p) {
         path = new ArrayList<>();
         path.add(p);
@@ -15,7 +18,15 @@ public class Path {
 
     //Safe copy
     public Path(Path other) {
-        this.path = new ArrayList<Point>(other.getPath());
+        this.path = new ArrayList<Point>(other.getList());
+    }
+
+    public String toString() {
+        String s = "";
+        for (Point p : path) {
+            s += p.toString() + ", ";
+        }
+        return s;
     }
 
     public void invalidate() {
@@ -23,8 +34,11 @@ public class Path {
     }
 
     //Get Methods
-    public ArrayList<Point> getPath() {
+    public ArrayList<Point> getList() {
         return path;
+    }
+    public boolean getValidity() {
+        return valid;
     }
     
     //Movement methods

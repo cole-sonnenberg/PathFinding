@@ -31,4 +31,10 @@ public class Point {
         }
         return null;
     }
+    public String toString() {
+        return "(" + x + ", " + y + ")";
+    }
+    public boolean equals(Point other) {
+        return other.getX() == x && other.getY() == y;
+    }
 }
