@@ -2,6 +2,10 @@ import java.util.*;
 import java.io.*;
 
 public class Map {
+    public static final int EAST = 0;
+    public static final int NORTH = 1;
+    public static final int WEST = 2;
+    public static final int SOUTH = 3;
     private String[][] map;
     private int xSize;
     private int ySize;
@@ -16,14 +20,16 @@ public class Map {
             System.out.println(xSize + " " + ySize);
             s.nextLine();
             map = new String[xSize][ySize];
-            for (int x = 0; x < xSize; x++) {
-                for (int y = 0; y < ySize; y++) {
+            for (int y = 0; y < ySize; y++) {
+                for (int x = 0; x < xSize; x++) {
                     map[x][y] = s.next();
                     if (map[x][y].equals("@")) {
                         start = new Point(x, y);
+                        map[x][y] = ".";
                     }
                     if (map[x][y].equals("G")) {
                         goal = new Point(x, y);
+                        map[x][y] = ".";
                     }
                     //System.out.print(map[x][y] + " ");
                 }
@@ -35,9 +41,15 @@ public class Map {
 
     public String toString() {
         String s = new String();
-        for (int x = 0; x < xSize; x++) {
-            for (int y = 0; y < ySize; y++) {
-                s += map[x][y] + " ";
+        for (int y = 0; y < ySize; y++) {
+            for (int x = 0; x < xSize; x++) {
+                if (x == start.getX() && y == start.getY()) {
+                    s += "@ ";
+                } else if (x == goal.getX() && y == goal.getY()) {
+                    s += "G ";
+                } else {
+                    s += map[x][y] + " ";
+                }
             }
             s += "\n";
         }
@@ -111,9 +123,6 @@ public class Map {
             return path;
         }
         for (int d = 0; d < 4; d++) {
-            if (DEBUG) {
-                System.out.println("I somehow got this far");
-            }
             if (splitPaths[d] != null && ((shortestPath == -1 && splitPaths[d].getValidity()) || (splitPaths[d].getList().size() < shortestPathLength && splitPaths[d].getValidity()))) {
                 shortestPath = splitPaths[d].getList().size();
                 shortestPath = d;
@@ -123,7 +132,56 @@ public class Map {
             path.invalidate();
             return path;
         } else {
+            if (DEBUG) {
+                System.out.println("Selecting " + shortestPath);
+            }
             return splitPaths[shortestPath];
+        }
+    }
+
+    public void movePlayer(Path shortestPath) {
+        boolean DEBUG = false;
+        if (DEBUG) {
+            System.out.println(start);
+        }
+        if (shortestPath.getList().size() == 1) {
+            return;
+        }
+        if (shortestPath.getList().get(1).equals(start.move(EAST))) {
+            start = start.move(EAST);
+            shortestPath.getList().remove(1);
+            return;
+        } else if (DEBUG) {
+            System.out.println(start.move(EAST) + " is not equal to " + shortestPath.getList().get(1));
+        }
+        if (shortestPath.getList().get(1).equals(start.move(NORTH))) {
+            start = start.move(NORTH);
+            shortestPath.getList().remove(1);
+            return;
+        } else if (DEBUG) {
+            System.out.println(start.move(NORTH) + " is not equal to " + shortestPath.getList().get(1));
+        }
+        if (shortestPath.getList().get(1).equals(start.move(WEST))) {
+            start = start.move(WEST);
+            shortestPath.getList().remove(1);
+            return;
+        } else if (DEBUG) {
+            System.out.println(start.move(WEST) + " is not equal to " + shortestPath.getList().get(1));
+        }
+        if (shortestPath.getList().get(1).equals(start.move(SOUTH))) {
+            start = start.move(SOUTH);
+            shortestPath.getList().remove(1);
+            return;
+        } else if (DEBUG) {
+            System.out.println(start.move(SOUTH) + " is not equal to " + shortestPath.getList().get(1));
+        }
+    }
+
+    public boolean finished() {
+        if (start.equals(goal)) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
