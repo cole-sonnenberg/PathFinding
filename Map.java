@@ -178,9 +178,13 @@ public class Map {
     }
 
     public boolean finished() {
+        boolean DEBUG = false;
         if (start.equals(goal)) {
             return true;
         } else {
+            if (DEBUG) {
+                System.out.println(start + " is not equal to " + goal);
+            }
             return false;
         }
     }

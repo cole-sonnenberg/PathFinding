@@ -8,9 +8,9 @@ public class Main {
         Path shortestPath = map.getShortestPath();
         System.out.println(shortestPath);
         do {
-            System.out.println(map);
             command = input.nextLine();
             map.movePlayer(shortestPath);
-        } while (!command.equalsIgnoreCase("Q") || !map.finished());
+            System.out.println(map);
+        } while (!command.equalsIgnoreCase("Q") && !map.finished());
     }
 } 
