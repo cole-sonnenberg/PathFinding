@@ -57,7 +57,7 @@ public class Map {
     }
 
     public boolean isWall(Point p) {
-        boolean DEBUG = true;
+        boolean DEBUG = false;
         int x = p.getX();
         int y = p.getY();
         if (x < 0 || x >= xSize) {
@@ -128,7 +128,7 @@ public class Map {
         }
         for (int d = 0; d < 4; d++) {
             if (splitPaths[d] != null && ((shortestPath == -1 && splitPaths[d].getValidity()) || (splitPaths[d].getList().size() < shortestPathLength && splitPaths[d].getValidity()))) {
-                shortestPath = splitPaths[d].getList().size();
+                shortestPathLength = splitPaths[d].getList().size();
                 shortestPath = d;
             }
         }
