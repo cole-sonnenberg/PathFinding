@@ -60,27 +60,49 @@ public class Map {
     }
 
     public Path getShortestPath() {
-        System.out.println(start + " " + goal);
+        System.out.println("Start: " + start + "     Goal: " + goal);
         return getShortestPath(start, goal, new Path());
     }
 
     public Path getShortestPath(Point a, Point b, Path oldPath) {
+        boolean DEBUG = false;
         Path path = new Path(oldPath);
         Path[] splitPaths = new Path[4];
         boolean stuck = true;
+        boolean alreadyVisited;
         int shortestPathLength = -1;
         int shortestPath = -1;
         path.addNewPoint(a);
+        if (DEBUG) {
+            System.out.println(path);
+        }
         if (a.equals(b)) {
+            if (DEBUG) {
+                System.out.println("Goal Found");
+            }
             return path;
         }
         for (int d = 0; d < 4; d++) {
-            if (!isWall(a.move(d)) && !path.getList().contains(a.move(d))) {
+            alreadyVisited = false;
+            for (Point p : path.getList()) {
+                if (p.equals(a.move(d))) {
+                    alreadyVisited = true;
+                    break;
+                }
+            }
+            if (DEBUG) {
+                System.out.println("Testing " + d);
+            }
+            if (!isWall(a.move(d)) && !alreadyVisited) {
+                if (DEBUG) {
+                    System.out.println("Going " + d);
+                }
                 stuck = false;
                 try {
                     splitPaths[d] = getShortestPath(a.move(d), b, path);
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                    System.out.println("Error caught\n" + e.getMessage());
+                    System.exit(1);
                 }
             }
         }
@@ -89,7 +111,10 @@ public class Map {
             return path;
         }
         for (int d = 0; d < 4; d++) {
-            if ((shortestPath == -1 && splitPaths[d].getValidity()) || (splitPaths[d].getList().size() < shortestPathLength && splitPaths[d].getValidity())) {
+            if (DEBUG) {
+                System.out.println("I somehow got this far");
+            }
+            if (splitPaths[d] != null && ((shortestPath == -1 && splitPaths[d].getValidity()) || (splitPaths[d].getList().size() < shortestPathLength && splitPaths[d].getValidity()))) {
                 shortestPath = splitPaths[d].getList().size();
                 shortestPath = d;
             }
