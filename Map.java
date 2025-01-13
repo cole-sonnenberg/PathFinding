@@ -57,6 +57,7 @@ public class Map {
     }
 
     public boolean isWall(Point p) {
+        boolean DEBUG = true;
         int x = p.getX();
         int y = p.getY();
         if (x < 0 || x >= xSize) {
@@ -65,7 +66,10 @@ public class Map {
         if (y < 0 || y >= ySize) {
             return true;
         }
-        if (map[x][y].equals('#')) {
+        if (map[x][y].equals("#")) {
+            if (DEBUG) {
+                System.out.println(p + " IS A WALL");
+            }
             return true;
         }
         return false;
